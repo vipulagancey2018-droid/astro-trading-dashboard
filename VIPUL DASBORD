@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Astro Technical Dashboard</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #101827;
+  color: white;
+}
+
+header {
+  background: #172554;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 { margin: 0 0 8px; }
+.subtitle { color: #bfdbfe; }
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 15px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background: #1e293b;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+h2 { color: #93c5fd; }
+
+.widget {
+  min-height: 420px;
+  width: 100%;
+}
+
+button, .button {
+  display: inline-block;
+  padding: 12px;
+  background: #2563eb;
+  color: white;
+  border: 0;
+  border-radius: 7px;
+  text-decoration: none;
+  cursor: pointer;
+  margin: 4px;
+}
+
+.note {
+  color: #cbd5e1;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #cbd5e1;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🌙 Astro + Technical Trading Dashboard</h1>
+  <div class="subtitle">
+    NIFTY 50 | BANK NIFTY | Financial Astrology
+  </div>
+  <p id="clock"></p>
+</header>
+
+<div class="container">
+
+  <div class="grid">
+
+    <section class="card">
+      <h2>📈 NIFTY 50 — Live Chart</h2>
+      <div class="widget">
+        <div class="tradingview-widget-container"
+             style="height:100%;width:100%">
+          <div class="tradingview-widget-container__widget"
+               style="height:100%;width:100%"></div>
+          <script
+            type="text/javascript"
+            src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js"
+            async>
+          {
+            "autosize": true,
+            "symbol": "NSE:NIFTY",
+            "interval": "15",
+            "timezone": "Asia/Kolkata",
+            "theme": "dark",
+            "style": "1",
+            "locale": "en",
+            "allow_symbol_change": true,
+            "calendar": false,
+            "support_host": "https://www.tradingview.com"
+          }
+          </script>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>📊 BANK NIFTY — Live Chart</h2>
+      <div class="widget">
+        <div class="tradingview-widget-container"
+             style="height:100%;width:100%">
+          <div class="tradingview-widget-container__widget"
+               style="height:100%;width:100%"></div>
+          <script
+            type="text/javascript"
+            src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js"
+            async>
+          {
+            "autosize": true,
+            "symbol": "NSE:BANKNIFTY",
+            "interval": "15",
+            "timezone": "Asia/Kolkata",
+            "theme": "dark",
+            "style": "1",
+            "locale": "en",
+            "allow_symbol_change": true,
+            "calendar": false,
+            "support_host": "https://www.tradingview.com"
+          }
+          </script>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <section class="card">
+    <h2>🧭 Technical Analysis</h2>
+    <p>
+      नीचे के बटन से TradingView पर Technical Analysis खोलें।
+      वहाँ उपलब्ध होने पर moving averages और oscillators के
+      संकेत देख सकते हैं।
+    </p>
+
+    <a class="button"
+       href="https://www.tradingview.com/symbols/NSE-NIFTY/technicals/"
+       target="_blank" rel="noopener">
+       NIFTY Technical Analysis
+    </a>
+
+    <a class="button"
+       href="https://www.tradingview.com/symbols/NSE-BANKNIFTY/technicals/"
+       target="_blank" rel="noopener">
+       BANK NIFTY Technical Analysis
+    </a>
+
+    <p class="note">
+      BUY/SELL का कोई संकेत मुनाफे की गारंटी नहीं है।
+      चार्ट और संकेतों में देरी या उपलब्धता की समस्या हो सकती है।
+    </p>
+  </section>
+
+  <div class="grid">
+
+    <section class="card">
+      <h2>🌙 Moon Phase — अनुमानित</h2>
+      <div id="moon"></div>
+      <p id="moondate"></p>
+      <p class="note">
+        यह चंद्रमा के चरण का अनुमान है। यह सटीक चंद्र राशि,
+        नक्षत्र या पंचांग की गणना नहीं है।
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>☀️ Sun & Astro Events</h2>
+      <p>
+        सूर्य, चंद्र राशि, नक्षत्र, अमावस्या, पूर्णिमा और
+        ग्रहों की स्थिति की जानकारी के लिए पंचांग देखें।
+      </p>
+
+      <a class="button"
+         href="https://mausam.imd.gov.in/responsive/rashtriyPanchang.php"
+         target="_blank" rel="noopener">
+         Official Rashtriya Panchang
+      </a>
+
+      <p class="note">
+        यह लिंक आधिकारिक पंचांग खोलता है। इस Dashboard में
+        नक्षत्र परिवर्तन या ग्रहों के अस्त/उदय की स्वतः अपडेट
+        होने वाली गणना शामिल नहीं है।
+      </p>
+    </section>
+
+  </div>
+
+  <section class="card">
+    <h2>⚠️ Trading Risk</h2>
+    <p class="note">
+      यह Dashboard जानकारी और अध्ययन के लिए है।
+      ज्योतिषीय मान्यताएँ वैज्ञानिक रूप से प्रमाणित ट्रेडिंग
+      संकेत नहीं हैं। केवल Astro के आधार पर ट्रेड न लें।
+      Options में पूँजी का बड़ा नुकसान हो सकता है।
+      ट्रेड लेने से पहले कीमत, जोखिम और अपनी रणनीति जाँचें।
+    </p>
+  </section>
+
+</div>
+
+<footer>
+  Astro + Technical Dashboard | India Time
+</footer>
+
+<script>
+function updateClock() {
+  const now = new Date();
+
+  document.getElementById("clock").textContent =
+    "Indian Time: " +
+    now.toLocaleString("en-IN", {
+      timeZone: "Asia/Kolkata",
+      dateStyle: "full",
+      timeStyle: "medium"
+    });
+}
+
+function showMoonPhase() {
+  const now = new Date();
+
+  // Approximate reference new moon: 6 Jan 2000, 18:14 UTC
+  const reference = Date.UTC(2000, 0, 6, 18, 14);
+  const synodicMonth = 29.530588853;
+  const days = (now.getTime() - reference) / 86400000;
+  const age = ((days % synodicMonth) + synodicMonth) %
+              synodicMonth;
+  const phase = age / synodicMonth;
+
+  let name;
+
+  if (phase < 0.035 || phase >= 0.965)
+    name = "New Moon / अमावस्या के आसपास";
+  else if (phase < 0.22)
+    name = "Waxing Crescent";
+  else if (phase < 0.28)
+    name = "First Quarter के आसपास";
+  else if (phase < 0.47)
+    name = "Waxing Gibbous";
+  else if (phase < 0.53)
+    name = "Full Moon / पूर्णिमा के आसपास";
+  else if (phase < 0.72)
+    name = "Waning Gibbous";
+  else if (phase < 0.78)
+    name = "Last Quarter के आसपास";
+  else
+    name = "Waning Crescent";
+
+  document.getElementById("moon").textContent =
+    "चंद्र चरण: " + name;
+
+  document.getElementById("moondate").textContent =
+    "चंद्र मास की अनुमानित आयु: " +
+    age.toFixed(1) + " दिन";
+}
+
+updateClock();
+showMoonPhase();
+setInterval(updateClock, 1000);
+setInterval(showMoonPhase, 60000);
+</script>
+
+</body>
+</html>
